@@ -1,0 +1,7 @@
+README.md
+setup.py
+clipnotes.egg-info/PKG-INFO
+clipnotes.egg-info/SOURCES.txt
+clipnotes.egg-info/dependency_links.txt
+clipnotes.egg-info/entry_points.txt
+clipnotes.egg-info/top_level.txt
