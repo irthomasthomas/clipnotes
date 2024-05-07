@@ -1,2 +1,2 @@
 [console_scripts]
-clipnotes = clipnotes.clipnotes:main
+clipnotes = clipnotes:main

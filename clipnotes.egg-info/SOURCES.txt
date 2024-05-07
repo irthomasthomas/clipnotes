@@ -1,4 +1,5 @@
 README.md
+clipnotes.py
 setup.py
 clipnotes.egg-info/PKG-INFO
 clipnotes.egg-info/SOURCES.txt
