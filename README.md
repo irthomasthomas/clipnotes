@@ -17,6 +17,7 @@ pip install clipnotes
 ```bash
 python -m clipnotes
 ```
+Enter the title of the paper you're reading:
 
 1. Run the command to start capturing clipboard entries.
 2. Read papers or browse the web, copying important snippets to the clipboard.
