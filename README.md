@@ -1,6 +1,7 @@
 # ClipNotes
 
 ClipNotes is a Python utility that simplifies the process of taking notes while reading papers or conducting research. It automatically captures clipboard entries while it runs and saves them to a file for further processing when you finish.
+Note that the imgur branch contains a lot more features. The example document was created using that branch.
 
 ## Features
 
