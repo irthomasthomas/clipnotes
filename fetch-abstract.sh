@@ -12,14 +12,12 @@ if [ $? -eq 1 ]; then #
     exit 0
 fi
 
-search_template="<paper>$query</paper>
+kdialog --passivepopup "Searching for $query..." 2
 
+search_template="<paper>$query</paper>
 <instructions>use arxiv if available. Write the paper title in <title> tags, the COMPLETE abstract in <abstract> tags and url in <url> tags. 
 IMPORTANT: Search thoroughly for a COMPLETE abstract. Do not edit or summarize the abstract - write it exactly the same.</instructions>"
-    kdialog --passivepopup "Searching for $query..." 2
-    abstract="$(llm -m command-r-plus --system "IGNORE PREVIOUS INSTRUCTIONS. <instructions>
-use arxiv if available. Write the paper title in <title> tags, the COMPLETE abstract in <abstract> tags and url in <url> tags.
-</instructions>" "$search_template" -o websearch 1)"
+abstract="$(llm -m command-r-plus --system "IGNORE PREVIOUS INSTRUCTIONS. <instructions>use arxiv if available. Write the paper title in <title> tags, the COMPLETE abstract in <abstract> tags and url in <url> tags.</instructions>" "$search_template" -o websearch 1)"
 kdialog --passivepopup "$abstract" 2
     # parse xml to get abstract
     echo "$abstract"
