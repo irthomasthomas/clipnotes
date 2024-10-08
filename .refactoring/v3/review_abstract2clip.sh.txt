@@ -1,0 +1,15 @@
+The refactored code improves upon the original in several ways:
+
+1. Improved shebang: Using `#!/usr/bin/env bash` instead of `#!/bin/bash` increases portability across different systems.
+
+2. Added error handling: The `set -euo pipefail` line enables stricter error handling, causing the script to exit immediately if any command fails, treat unset variables as an error, and propagate pipe failures.
+
+3. Improved readability: By breaking the one-liner into multiple lines and using descriptive variable names, the code becomes more readable and maintainable.
+
+4. Eliminated unnecessary use of xclip: Instead of piping the primary selection directly to the fetch-abstract.sh script, we now store it in a variable first. This allows for potential error checking or manipulation of the selection before passing it to the script.
+
+5. Used here-string: The `<<< "$PRIMARY_SELECTION"` syntax (known as a here-string) is used to pass the primary selection to the fetch-abstract.sh script, which is cleaner than piping.
+
+6. Explicit clipboard selection: The `-n` flag is added to the final `echo` command to prevent adding a newline character at the end of the copied text.
+
+These changes make the script more robust, readable, and maintainable while preserving its original functionality.

@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 
 import argparse
@@ -93,12 +92,9 @@ class ClipboardMonitor:
             return ""
 
     def copy_to_clipboard(self, text):
-        try:
-            self.root.clipboard_clear()
-            self.root.clipboard_append(text)
-            self.root.update()
-        except tk.TclError:
-            print("Error: Unable to copy to clipboard", file=sys.stderr)
+        self.root.clipboard_clear()
+        self.root.clipboard_append(text)
+        self.root.update()
 
 def main():
     parser = argparse.ArgumentParser(description="Monitor clipboard and save content to file or stdout.")
@@ -119,9 +115,6 @@ def main():
     except KeyboardInterrupt:
         print("\nExiting.", file=sys.stderr)
         clipboard_monitor.monitoring = False
-    finally:
-        clipboard_monitor.root.quit()
-        clipboard_monitor.root.destroy()
 
 if __name__ == "__main__":
     main()

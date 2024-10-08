@@ -1,13 +1,9 @@
-
-#!/usr/bin/env python3
-
 import argparse
 import os
 import sys
 import tempfile
 import threading
 import time
-import tkinter as tk
 
 class ClipboardMonitor:
     def __init__(self, pipe_to_stdout=False, paper_title=None):
@@ -15,9 +11,7 @@ class ClipboardMonitor:
         self.output_file = ""
         self.last_clipboard_content = ""
         self.pipe_to_stdout = pipe_to_stdout
-        self.paper_title = paper_title or self.get_paper_title()
-        self.root = tk.Tk()
-        self.root.withdraw()
+        self.paper_title = paper_title
 
     def toggle_monitoring(self):
         if self.monitoring:
@@ -27,11 +21,17 @@ class ClipboardMonitor:
                 self.copy_to_clipboard(self.output_file)
             self.monitoring = False
         else:
+            if not self.paper_title:
+                self.paper_title = self.get_paper_title()
+
             if self.paper_title:
                 if not self.pipe_to_stdout:
-                    self.output_file = self.create_and_open_temp_file()
+                    self.output_file = self.create_temp_file()
                     print(f"Monitoring clipboard for paper: {self.paper_title}", file=sys.stderr)
                     print(f"Copied items will be saved to: {self.output_file}", file=sys.stderr)
+                    with open(self.output_file, 'w') as f:
+                        f.write(f"Notes for {self.paper_title}\n")
+                    self.open_file(self.output_file)
                 else:
                     print(f"Monitoring clipboard for paper: {self.paper_title}", file=sys.stderr)
                     print(f"Notes for {self.paper_title}")
@@ -67,14 +67,14 @@ class ClipboardMonitor:
 
     @staticmethod
     def get_paper_title():
-        return input("Enter the title of the paper: ").strip() if sys.stdin.isatty() and sys.stdout.isatty() else "Untitled Paper"
+        if sys.stdin.isatty() and sys.stdout.isatty():
+            return input("Enter the title of the paper: ").strip()
+        return "Untitled Paper"
 
-    def create_and_open_temp_file(self):
+    @staticmethod
+    def create_temp_file():
         fd, path = tempfile.mkstemp(suffix=".txt")
         os.close(fd)
-        with open(path, 'w') as f:
-            f.write(f"Notes for {self.paper_title}\n")
-        self.open_file(path)
         return path
 
     @staticmethod
@@ -86,19 +86,23 @@ class ClipboardMonitor:
         elif sys.platform.startswith('win'):
             os.system(f"start {file_path}")
 
-    def get_clipboard_content(self):
+    @staticmethod
+    def get_clipboard_content():
         try:
-            return self.root.clipboard_get()
-        except tk.TclError:
-            return ""
+            import pyperclip
+            return pyperclip.paste()
+        except ImportError:
+            print("pyperclip module is not installed. Please install it using 'pip install pyperclip'.", file=sys.stderr)
+            sys.exit(1)
 
-    def copy_to_clipboard(self, text):
+    @staticmethod
+    def copy_to_clipboard(text):
         try:
-            self.root.clipboard_clear()
-            self.root.clipboard_append(text)
-            self.root.update()
-        except tk.TclError:
-            print("Error: Unable to copy to clipboard", file=sys.stderr)
+            import pyperclip
+            pyperclip.copy(text)
+        except ImportError:
+            print("pyperclip module is not installed. Please install it using 'pip install pyperclip'.", file=sys.stderr)
+            sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description="Monitor clipboard and save content to file or stdout.")
@@ -119,9 +123,6 @@ def main():
     except KeyboardInterrupt:
         print("\nExiting.", file=sys.stderr)
         clipboard_monitor.monitoring = False
-    finally:
-        clipboard_monitor.root.quit()
-        clipboard_monitor.root.destroy()
 
 if __name__ == "__main__":
     main()

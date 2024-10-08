@@ -1,0 +1,8 @@
+The provided bash script implements a simple state machine to capture and stitch two text selections. It uses temporary files to store state and selections, and relies on external tools like xclip and kdialog. To improve this, we can refactor it into a single Python script that:
+
+1. Uses in-memory storage instead of temporary files
+2. Replaces xclip with pyperclip for cross-platform clipboard operations
+3. Replaces kdialog with a custom notification function using tkinter
+4. Implements a simple event loop to continuously check for new selections
+
+This refactoring will make the script more portable, efficient, and easier to maintain.

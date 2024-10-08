@@ -1,0 +1,19 @@
+The refactored code includes the following improvements:
+
+1. Type hints: Added type hints to improve code readability and maintainability.
+
+2. Code organization: Broke down the `toggle_monitoring` method into smaller, more focused methods (`_stop_monitoring`, `_start_monitoring`, `_get_paper_title`, `_setup_output`).
+
+3. Improved naming: Renamed `_start_clipboard_monitoring` to `_start_clipboard_monitoring_thread` for clarity.
+
+4. Simplified logic: Extracted the clipboard content processing into a separate method `_process_new_clipboard_content`.
+
+5. Consistent formatting: Ensured consistent use of f-strings and quotation marks.
+
+6. Improved error handling: Changed `exit(1)` to `sys.exit(1)` for better compatibility.
+
+7. Removed redundant comments and simplified some expressions.
+
+8. Improved type safety by using `Optional[str]` for `paper_title`.
+
+These changes make the code more readable, maintainable, and easier to understand. The functionality remains the same, but the structure is improved.

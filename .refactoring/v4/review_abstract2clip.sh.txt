@@ -1,0 +1,9 @@
+The provided code is a combination of Python and Bash scripts. It aims to fetch text from the primary selection (likely on a Linux system), generate an abstract from this text, and then copy the abstract to the clipboard. The code is well-structured but can be improved by:
+
+1. Merging the functionality into a single Python file.
+2. Removing the dependency on external bash commands where possible.
+3. Implementing a more robust abstract generation function.
+4. Improving error handling and user feedback.
+5. Reducing the number of imports.
+
+The refactored code addresses these points while maintaining the core functionality.

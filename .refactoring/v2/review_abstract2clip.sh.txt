@@ -1,0 +1,15 @@
+The original code was a Bash script that used xclip to interact with the clipboard. I've refactored it into a Python script, which offers several improvements:
+
+1. Readability: The Python version is more readable and self-explanatory with function names describing their purpose.
+
+2. Error Handling: While not explicitly implemented, Python's subprocess module provides better error handling capabilities compared to Bash.
+
+3. Portability: By using the pyperclip library, the script becomes more portable across different platforms.
+
+4. Modularity: The code is now split into functions, making it easier to maintain and extend.
+
+5. Flexibility: Being in Python, it's now easier to add more complex logic or integrate with other Python libraries if needed in the future.
+
+To use this refactored version, you'll need to install the pyperclip library (pip install pyperclip). Also, ensure that xclip is still installed on your system as it's being used via subprocess calls.
+
+Note that this script still relies on the external fetch-abstract.sh script. For further improvement, you might consider implementing the functionality of fetch-abstract.sh directly in Python if possible.
