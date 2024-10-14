@@ -9,6 +9,7 @@ Widely used alignment techniques, such as reinforcement learning from human feed
 We reinforce behaviors that human evaluators rate highly and penalize behaviors that evaluators rate poorly. This procedure is very effective when human evaluators can tell if model behavior is good or bad and is a core part of training modern language model assistants such as ChatGPT.
 
 <details>
+  
 ## However, superhuman models will be capable of complex and creative behaviors that humans cannot fully understand
 
 For example, if a superhuman assistant model generates a million lines of extremely complicated code, humans will not be able to provide reliable supervision for key alignment-relevant tasks, including: whether the code follows the user's intentions, whether the assistant model answers questions about the code honestly, whether the code is safe or dangerous to execute, and so on. As a result, if we finetune a superhuman model with human supervision on a reward modeling (RM) or safety classification task, it is unclear how that model will generalize to complicated behaviors that humans could not reliably supervise themselves.
@@ -49,6 +50,7 @@ Aligning superhuman models is essential for making them safe; there is increasin
 Weak-to-strong learning is a special type of weakly supervised learning—a setting in which models are trained using unreliable labels. There is also a rich literature on the related problem of learning from noisy labels (Song et al., 2022). Unlike most work on label noise, the errors in our weak supervision are much harder to address than uniform label noise, instead having "instance-dependent" errors (Frénay & Verleysen, 2013).
 
 <details>
+  
 ## Learning from Noisy Labels with Deep Neural Networks: A Survey
 
 ### Abstract
@@ -67,6 +69,7 @@ The framework of first training a teacher and then training a student on teacher
 Many papers have shown that pretraining on massive, diverse data leads to more robust representations that generalize better out-of-distribution. Finetuning typically improves in-distribution generalization, but often performs poorly out-of-distribution, sometimes even degrading performance relative to zero-shot prompting (Kumar et al., 2022; Wortsman et al., 2022b; Awadalla et al., 2022).
 
 <details>
+  
 ## Fine-Tuning can Distort Pretrained Features and Underperform Out-of-Distribution
 
 ### Abstract
@@ -75,6 +78,7 @@ When transferring a pretrained model to a downstream task, two popular methods a
 </details>
 
 <details>
+  
 ## Exploring The Landscape of Distributional Robustness for Question Answering Models
 
 ### Abstract
@@ -153,6 +157,7 @@ We see more mixed results in the chess puzzle setting. In particular, when using
 Finally, we find that weak-to-strong generalization is poor by default in the ChatGPT reward model setting. We are usually only able to recover roughly 10% of the performance gap between the weak supervisor and the strong student.
 
 <details>
+  
 ### Improving Weak-to-Strong Generalization is Tractable
 
 We now show that we can use simple methods to substantially improve weak-to-strong generalization.
@@ -189,6 +194,7 @@ Finally, we find evidence consistent with our motivating intuition for the confi
 Strong methods will be essential for solving superalignment, but to trust those methods it is also important to understand when and why they work. A better understanding of weak-to-strong generalization could help us trust that generalization will continue working even in the future high-stakes settings we care most about, and could help us develop better methods along the way.
 
 <details>
+  
 ### Understanding Imitation
 
 When we train a strong model with weak supervision on some task, our hope is that the strong model will perform that desired task as well as possible, leveraging the latent capabilities it learned from pretraining to significantly outperform the weak supervisor. A salient way in which we could fail to achieve that desired generalization is if the strong model instead learns to imitate the weak supervisor—predicting how the weak supervisor would have classified each example. This failure mode of imitating weak supervision is especially relevant to our naive baseline in Section 4.2, which directly trains the student to imitate the supervisor.
@@ -223,6 +229,7 @@ In Appendix E, we show initial experiments that test how different types of weak
 </details>
 
 <details>
+  
 ### Saliency in the Strong Model Representations
 
 One intuition for when weak-to-strong generalization might be feasible is when the task or concept we want to elicit is internally "salient" to the strong model. In this section, we study several phenomena related to the saliency of the concepts we are trying to elicit from the student model.
