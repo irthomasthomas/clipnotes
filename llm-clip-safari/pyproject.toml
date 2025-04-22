@@ -1,0 +1,22 @@
+```toml
+[project]
+name = "llm-clip-safari"
+version = "0.1.0"
+description = "LLM plugin for analyzing web content and performing visual searches using CLIP."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache 2.0"}
+authors = [
+  {name = "Your Name", email = "your.email@example.com"}
+]
+dependencies = [
+  "clip",
+  "llm",
+  "requests",
+  "Pillow",
+  "torch"
+]
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+```

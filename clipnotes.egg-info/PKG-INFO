@@ -1,3 +1,199 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.2
 Name: clipnotes
-Version: 0.1.0
+Version: 0.2.0
+Summary: A tool to monitor clipboard and save contents with context
+Author: Thomas
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 3 - Alpha
+Description-Content-Type: text/markdown
+Requires-Dist: pyperclip
+Requires-Dist: psutil
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: summary
+
+# ClipNotes
+
+ClipNotes is a cross-platform tool to monitor your clipboard and save its contents along with contextual information. It includes both a command-line interface and a graphical user interface for easier use, supports encryption for sensitive data, and now offers regex-based content filtering.
+
+## Installation
+
+### From PyPI
+
+```
+pip install clipnotes
+```
+
+### From source
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/clipnotes.git
+   cd clipnotes
+   ```
+
+2. Install the package and dependencies:
+   ```
+   pip install -e .
+   pip install -r requirements.txt
+   ```
+
+   Note: Some dependencies are platform-specific and will only be installed on the relevant operating system.
+
+## Usage
+
+### Command-line Interface
+
+Run ClipNotes from the command line:
+
+```
+clipnotes [-h] [-o OUTPUT] [-i INTERVAL] [-s SEPARATOR] [-f {txt,json,csv}] [-d DEDUP_LIMIT] [-e] [-p PASSWORD] [--include INCLUDE] [--exclude EXCLUDE]
+```
+
+Options:
+- `-h`, `--help`: Show help message and exit
+- `-o OUTPUT`, `--output OUTPUT`: Output file name (default from config)
+- `-i INTERVAL`, `--interval INTERVAL`: Polling interval in seconds (default from config)
+- `-s SEPARATOR`, `--separator SEPARATOR`: Separator between clipboard entries (default from config, only for txt format)
+- `-f {txt,json,csv}`, `--format {txt,json,csv}`: Output file format (default from config)
+- `-d DEDUP_LIMIT`, `--dedup-limit DEDUP_LIMIT`: Number of recent entries to keep for deduplication (default from config)
+- `-e`, `--encrypt`: Enable encryption of clipboard contents
+- `-p PASSWORD`, `--password PASSWORD`: Password for encryption (required if --encrypt is used)
+- `--include INCLUDE`: Regular expression pattern to include content
+- `--exclude EXCLUDE`: Regular expression pattern to exclude content
+
+Example:
+```
+clipnotes -o my_notes.json -i 1 -f json -d 500 -e -p mypassword --include "^https?://" --exclude "^file://"
+```
+
+This will save encrypted clipboard contents to `my_notes.json` in JSON format, check for changes every 1 second, keep the last 500 entries for deduplication, use "mypassword" for encryption, include only URLs starting with "http://" or "https://", and exclude URLs starting with "file://".
+
+### Graphical User Interface
+
+To launch the ClipNotes GUI, run:
+
+```
+python clipnotes_gui.py
+```
+
+The GUI provides an easy-to-use interface for configuring and running ClipNotes:
+
+- Select the output file
+- Choose the output format (txt, json, or csv)
+- Set the polling interval
+- Set the deduplication limit
+- Enable or disable encryption and set a password
+- Set include and exclude regex patterns for content filtering
+- Start and stop monitoring with a single click
+- View the last copied content in real-time
+
+## Output Formats
+
+### Text (txt)
+
+The text output format will contain entries in the following format:
+
+```
+---
+Timestamp: 2023-06-10 15:30:45
+Source: Firefox - New Tab
+Copied content goes here (or encrypted content if encryption is enabled)
+```
+
+### JSON
+
+The JSON output format will be an array of objects, each representing a clipboard entry:
+
+```json
+[
+  {
+    "content": "Copied content goes here (or encrypted content if encryption is enabled)",
+    "timestamp": "2023-06-10 15:30:45",
+    "window_info": "Firefox - New Tab"
+  },
+  ...
+]
+```
+
+### CSV
+
+The CSV output format will have the following columns: timestamp, window_info, content
+
+```
+timestamp,window_info,content
+2023-06-10 15:30:45,"Firefox - New Tab","Copied content goes here (or encrypted content if encryption is enabled)"
+```
+
+## Encryption
+
+When encryption is enabled, the clipboard content is encrypted using Fernet symmetric encryption from the `cryptography` library. The encryption key is derived from the user-provided password using PBKDF2. This ensures that the stored clipboard contents are protected from unauthorized access.
+
+Note: The encryption is applied only to the clipboard content, not to the timestamp or window information.
+
+## Content Filtering
+
+ClipNotes supports regex-based content filtering, allowing you to selectively include or exclude clipboard content based on regular expression patterns. This feature can be useful for various scenarios, such as:
+
+- Capturing only specific types of data (e.g., URLs, email addresses)
+- Excluding sensitive information (e.g., credit card numbers, social security numbers)
+- Focusing on content from specific applications or websites
+
+To use content filtering, specify the `--include` and/or `--exclude` options in the command-line interface, or use the corresponding fields in the GUI.
+
+## Cross-Platform Compatibility
+
+ClipNotes is designed to work on Windows, macOS, and Linux. The active window information capture is implemented differently for each platform:
+
+- Windows: Uses `win32gui` and `win32process`
+- macOS: Uses `AppKit`
+- Linux: Tries to use `Xlib` first, then falls back to `psutil` if `Xlib` is not available
+
+## Project Status
+
+ClipNotes is currently in beta stage (v0.7.0). We are actively working on improving its functionality and reliability.
+
+### Roadmap
+
+1. Improve error handling and recovery mechanisms
+2. Add more comprehensive tests for cross-platform functionality, encryption, and regex filtering
+3. Enhance the GUI with additional features and customization options
+4. Implement a secure way to store and manage encryption keys
+5. Add support for plugins to extend functionality
+
+## Development
+
+To set up the development environment:
+
+1. Create a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   ```
+
+2. Install development dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Run tests:
+   ```
+   ./run_tests.sh
+   ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.
